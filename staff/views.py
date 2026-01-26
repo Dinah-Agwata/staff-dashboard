@@ -1,10 +1,12 @@
+import csv
+
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.utils import timezone
 from django.contrib.auth import get_user_model
-import csv
+
 
 from .models import Event
 from .forms import StaffActivityFilterForm
@@ -17,7 +19,7 @@ def staff_activity_dashboard(request):
     user = request.user
     organization = user.organization
 
-    # Time boundary
+    # Time boundary. Dashboard defaults to current month activity
     today = timezone.now()
     start_of_month = today.replace(day=1)
 
@@ -86,7 +88,9 @@ def staff_activity_dashboard(request):
 
     context = {
         "staff_list": queryset,
-        "form": form
+        "form": form,
+        "user": user,
+        "organization": organization
     }
 
     return render(request, "staff/staff_activity_dashboard.html", context)

@@ -1,6 +1,8 @@
-from django.urls import path, include
-from .views import staff_activity_dashboard
+from django.urls import path
 from django.contrib import admin
+
+from .views import staff_activity_dashboard
+
 
 urlpatterns=[
     path(
